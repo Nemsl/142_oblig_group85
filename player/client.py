@@ -15,14 +15,14 @@ import types
 sel = selectors.DefaultSelector()
 messages = [b"Message 1 from client.", b"Message 2 from client."]
 
-def start_connections(host, port, num_conns):
-    server_addr = (host, port)
+def startConnection(host, port, num_conns):
+    serverAdress = (host, port)
     for i in range(0, num_conns):
         connid = i + 1
-        print(f"Starting connection {connid} to {server_addr}")
+        print(f"Starting connection {connid} to {serverAdress}")
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.setblocking(False)
-        sock.connect_ex(server_addr)
+        sock.connect_ex(serverAdress)
         events = selectors.EVENT_READ | selectors.EVENT_WRITE
         data = types.SimpleNamespace(
             connid=connid,
@@ -32,7 +32,7 @@ def start_connections(host, port, num_conns):
             outb=b"",
         )
         sel.register(sock, events, data=data)
-start_connections(HOST, PORT, 3)
+startConnection(HOST, PORT, 3)
 '''
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
