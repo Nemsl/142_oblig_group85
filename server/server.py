@@ -20,14 +20,14 @@ def accept_wrapper(sock):
     conn, addr = sock.accept()  # Should be ready to read
     print(f"Accepted connection from {addr}")
     conn.setblocking(False)
-    data = types.SimpleNamespace(addr=addr, inb=b"", outb=b"")
-    events = selectors.EVENT_READ | selectors.EVENT_WRITE
-    sel.register(conn, events, data=data)
+    message = libserver.Message(sel, conn, addr)
+    sel.register(conn, selectors.EVENT_READ, data=message)
 
 
 def service_connection(key, mask):
     sock = key.fileobj
     data = key.data
+
     if mask & selectors.EVENT_READ:
         recv_data = sock.recv(1024)  # Should be ready to read
         if recv_data:
@@ -49,7 +49,15 @@ try:
             if key.data is None:
                 accept_wrapper(key.fileobj)
             else:
-                service_connection(key, mask)
+                message = key.data
+                try:
+                    message.process_events(mask)
+                except Exception:
+                    print(
+                        f"Main: Error: Exception for {message.addr}:\n"
+
+                    )
+                    message.close()
 except KeyboardInterrupt:
     print("Caught keyboard interrupt, exiting")
 finally:
