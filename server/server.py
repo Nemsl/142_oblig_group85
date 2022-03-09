@@ -3,6 +3,8 @@
 import socket
 import selectors
 from selectors import EVENT_READ
+from core import Champion, Match, Shape, Team
+import startGame
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
 
@@ -19,9 +21,9 @@ sel.register(lsock, selectors.EVENT_READ, True)
 
 def accept(sock):
     print("DEN KJØRER")
-
     print(sock)
     conn, addr = sock.accept()  # Should be ready to read
+    conn.send(''.encode())
     print(f"Accepted connection from {addr}")
     conn.setblocking(False)
     sel.register(conn, EVENT_READ)
@@ -36,6 +38,9 @@ def read(conn):
         print("Closing connection")
         sel.unregister(recv_data)
         recv_data.close()
+
+
+
 
 
 
