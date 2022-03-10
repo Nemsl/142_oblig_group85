@@ -1,4 +1,3 @@
-Name,Rock,Paper,Scissors
 Vain,50,25,25
 Dr. Yi,10,10,80
 Twist,10,25,65
