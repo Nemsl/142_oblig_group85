@@ -1,5 +1,8 @@
 import socket
 import json
+import pickle
+import client_draw
+import core
 
 HOST = "127.0.0.1"
 Local = "localhost"# The server's hostname or IP address
@@ -30,6 +33,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
         inp = input(">")
         s.sendall(inp.encode())
+
 
 '''
 sock = socket()
