@@ -3,4 +3,7 @@ Github repository  for the obligatory asignment in INF142 <br/>
 TORD NIKOLAI STANG <br/>
 BERGER EDVARD SKOGSTAD
 
-To test the connection between the server and client, simply run server in one terminal and client in another, in that order.
+
+
+To start the game, simply run server.py in one terminal, then database_client.py in another terminal, and then run client.py two times in different terminals.
+
