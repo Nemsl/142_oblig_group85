@@ -17,7 +17,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         results = s.recv(2048).decode()
         print(results)
         if results != '':
-            file1 = open("Result.txt", "w+")
-            file1.write(results)
+            file1 = open("Result.txt", "a+")
+            file1.write(results + ' Victory\n')
             print(file1.read())
             break

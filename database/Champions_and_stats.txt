@@ -8,4 +8,5 @@ Asir,5,5,90
 Cactus,5,90,5
 Luanne,90,5,5
 Berger,100,0,0
+Tord,0,70,30
 Tree Sentinel,33,33,36
