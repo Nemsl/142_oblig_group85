@@ -23,6 +23,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             Message = Message.decode()
         except:
             client_draw.print_match_summary(pickle.loads(Message))
+            break
         try:
             if "Velg" in Message:
                 inp = input(">")
