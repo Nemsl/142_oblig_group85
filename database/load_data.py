@@ -1,4 +1,4 @@
 import pandas as pd
 
-def load_data():
-    data = pd.read("Champions_and_stats.csv")
+def getChamps():
+    return open("Champions_and_stats.txt", "r").read()
