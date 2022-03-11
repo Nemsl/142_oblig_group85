@@ -16,18 +16,15 @@ players = []
 
 DATABASE_PORT = 65433
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, DATABASE_PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print(f"Connected by {addr}")
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as dbs:
+    dbs.bind((HOST, DATABASE_PORT))
+    dbs.listen()
+    dbconn, dbaddr = dbs.accept()
+    with dbconn:
+        print(f"Connected by {dbaddr}")
 
-        data = conn.recv(1024 * 4)
+        data = dbconn.recv(1024 * 4)
         heroes = json.loads(data.decode())
-
-    conn.close()
-    s.close()
 
 sel = selectors.DefaultSelector()
 lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -144,13 +141,13 @@ def main(chumps) -> None:
         startGame.Team([champions[name] for name in player2])
     )
     match.play()
+    dbconn.send(startGame.print_match_summary(match).encode)
 
     match = pickle.dumps(match)
     players[0][0].send(match)
     players[1][0].send(match)
 
     # Print a summary
-    #startGame.print_match_summary(match)
 
 print("aehfe")
 main(heroes)

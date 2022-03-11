@@ -80,16 +80,16 @@ def print_match_summary(match: Match) -> None:
 
     # Print the score
     red_score, blue_score = match.score
-    print(f'Red: {red_score}\n'
-          f'Blue: {blue_score}')
+
 
     # Print the winner
     if red_score > blue_score:
-        print('\n[red]Red victory! :grin:')
+        return "Red"
     elif red_score < blue_score:
-        print('\n[blue]Blue victory! :grin:')
+        return "Blue"
     else:
-        print('\nDraw :expressionless:')
+        return "Draw"
+
 
 
 def main(chumps) -> None:
