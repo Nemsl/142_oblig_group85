@@ -110,19 +110,30 @@ def main(chumps) -> None:
     player1 = []
     player2 = []
     counter = 0
+    isPlayer1 = True
     # Champion selection
-    while counter < 5:
-        if counter % 2 == 0:
+    while counter < 4:
+        if isPlayer1:
+            print("Sending to player 1")
             players[0][0].send(b"Velg en sjampinjong")
-            if startGame.input_champion('Player 1', 'red', champions, player1, player2, read(players[0][0])):
+
+            choice = read(players[0][0])
+            if startGame.input_champion('Player 1', 'red', champions, player1, player2, choice):
                 counter += 1
+                isPlayer1 = False
             else:
                 print("Player 1 funket ikkeqq")
                 counter = 0
         else:
+            print("Sending to player 2")
             players[1][0].send(b"Velg en sjampinjong")
-            if startGame.input_champion('Player 2', 'blue', champions, player2, player1, read(players[1][0])):
+
+            choice = read(players[1][0])
+            if choice == "Connected":
+                choice = read(players[1][0])
+            if startGame.input_champion('Player 2', 'blue', champions, player2, player1, choice):
                 counter += 1
+                isPlayer1 = True
             else:
                 counter = 0
     print('\n')
@@ -134,9 +145,12 @@ def main(chumps) -> None:
     )
     match.play()
 
+    match = pickle.dumps(match)
+    players[0][0].send(match)
+    players[1][0].send(match)
 
     # Print a summary
-    startGame.print_match_summary(match)
+    #startGame.print_match_summary(match)
 
 print("aehfe")
 main(heroes)

@@ -17,23 +17,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     printer2 = s.recv(4096)
     d = pickle.loads(printer2)
     while True:
-
-
-        client_draw.print_available_champs(d)
-        #f
-        #data = s.recv(2048).decode()
-        #heroes = json.loads(data.decode())
-        #print('Received from server: ' + data)
-        print(s.recv(2048).decode())
-        inp = input(">")
-        if inp == "q":
+        print(client_draw.print_available_champs(d))
+        Message = s.recv(2048)
+        try:
+            Message = Message.decode()
+        except:
+            client_draw.print_match_summary(pickle.loads(Message))
+        try:
+            if "Velg" in Message:
+                inp = input(">")
+                if inp == "q":
+                    break
+                s.sendall(inp.encode())
+            else:
+                continue
+        except:
             break
-        s.sendall(inp.encode())
 
 
-'''
-sock = socket()
-sock.connect(address)
-message = "Hei"
-sock.send(message.encode())
-'''
+
